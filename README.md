@@ -188,8 +188,8 @@ Không có ràng buộc cụ thể về nơi đặt component, các team member 
 
 3. `pages/[page_component]/components/` hoặc `pages/[page_component]/components/[page_child_component]/components`
 - Chia giao diện trang hiện tại thành các thành phần nhỏ, giảm độ phức tạp, dễ quản lý.
-- Có style phức tạp nhưng thuộc trang.
-- Có logic phức tạp nhưng thuộc trang.
+- Có style phức tạp nhưng thuộc trang hiện tại.
+- Có logic phức tạp nhưng thuộc trang hiện tại.
 
 ### Lazy loading components
 Mặc định, dự án đã được cấu hình để scan & auto-import các component từ thư mục `components/utils`. Nếu sử dụng các component có trong thư mục này, chỉ cần đặt vào template dạng `<LazyUtils[ComponentName]></LazyUtils[ComponentName]>` mà không cần import.
@@ -236,3 +236,15 @@ Dự án được phát triển dựa trên các component dựng sẵn từ pac
 | `TabsPlugin`          | `<b-tabs>`, `<b-tab>` |
 | `ToastPlugin`         | `<b-toast>` (hoặc dùng qua `$bvToast`) |
 | `TooltipPlugin`       | `v-b-tooltip` (directive, không có component tag) |
+
+Để sử dụng các component ngoài danh sách trên, import trực tiếp từ bootstrap-vue.
+Ví dụ:
+```
+<script>
+import { BNav, BNavItem } from 'bootstrap-vue';
+
+export default {
+    components: { BNav, BNavItem },
+}
+</script>
+```
