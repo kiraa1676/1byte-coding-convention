@@ -181,7 +181,7 @@ Ví dụ:
 Không có ràng buộc cụ thể về nơi đặt component, các team member của 1Byte sử dụng kinh nghiệm cá nhân của mình để phân tích và tìm chỗ đặt cho phù hợp dựa trên các tiêu chí:
 1. `components/`
 - Sử dụng cho layout.
-- Có thể tái sử dụng ở nhiều nơi nhưng ưu tiên dùng chung với <ClientOnly>.
+- Có thể tái sử dụng ở nhiều nơi nhưng ưu tiên dùng chung với `<ClientOnly>`.
    
 2. `components/utils/`
 - Có thể tái sử dụng ở nhiều nơi.
@@ -259,7 +259,7 @@ export default {
 
 <script></script>
 
-<style scoped lang="scss"></style>
+<style lang="scss" scoped></style>
 ```
 
 #### Các quy tắc dành cho template
