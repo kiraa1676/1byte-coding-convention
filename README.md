@@ -175,15 +175,64 @@ Ví dụ:
 <TopUpAmount></TopUpAmount>
 <DomainTransferForm></DomainTransferForm>
 ```
-**Lưu ý**: luôn sử dụng thẻ đóng cho component, không sử dụng self-closing component.
 
 ### Quy tắc về nơi đặt component
 Không có ràng buộc cụ thể về nơi đặt component, các team member của 1Byte sử dụng kinh nghiệm cá nhân của mình để phân tích và tìm chỗ đặt cho phù hợp dựa trên các tiêu chí:
-1. `components/utils/`
+1. `components/`
+- Sử dụng cho layout.
+- Có thể tái sử dụng ở nhiều nơi nhưng ưu tiên dùng chung với <ClientOnly>.
+   
+2. `components/utils/`
 - Có thể tái sử dụng ở nhiều nơi.
 - Có style sử dụng chung.
 
-2. `pages/[page_component]/components/` hoặc `pages/[page_component]/components/[page_child_component]/components`
+3. `pages/[page_component]/components/` hoặc `pages/[page_component]/components/[page_child_component]/components`
 - Chia giao diện trang hiện tại thành các thành phần nhỏ, giảm độ phức tạp, dễ quản lý.
 - Có style phức tạp nhưng thuộc trang.
 - Có logic phức tạp nhưng thuộc trang.
+
+### Lazy loading components
+Mặc định, dự án đã được cấu hình để scan & auto-import các component từ thư mục `components/utils`. Nếu sử dụng các component có trong thư mục này, chỉ cần đặt vào template dạng `<LazyUtils[ComponentName]></LazyUtils[ComponentName]>` mà không cần import.
+Ví dụ:
+```
+<LazyUtilsPartners />
+<LazyUtilsAwardsRecognition />
+<LazyUtilsHeadingArea></LazyUtilsHeadingArea>
+<LazyUtilsFAQ></LazyUtilsFAQ>
+<LazyUtilsExportContract />
+```
+
+### Bootsrap Vue
+Dự án được phát triển dựa trên các component dựng sẵn từ package `bootstrap-vue`, tuy nhiên chỉ có một số component được cài đặt để sử dụng mà không cần import. Bao gồm:
+| Plugin                | Component Tags |
+|-----------------------|----------------|
+| `AlertPlugin`         | `<b-alert>` |
+| `AspectPlugin`        | `<b-aspect>` |
+| `BadgePlugin`         | `<b-badge>` |
+| `BreadcrumbPlugin`    | `<b-breadcrumb>`, `<b-breadcrumb-item>` |
+| `ButtonPlugin`        | `<b-button>` |
+| `ButtonGroupPlugin`   | `<b-button-group>`, `<b-button-toolbar>` |
+| `CardPlugin`          | `<b-card>`, `<b-card-body>`, `<b-card-header>`, `<b-card-footer>`, `<b-card-title>`, `<b-card-sub-title>` |
+| `CollapsePlugin`      | `<b-collapse>` |
+| `EmbedPlugin`         | `<b-embed>` |
+| `FormPlugin`          | `<b-form>` |
+| `FormCheckboxPlugin`  | `<b-form-checkbox>`, `<b-form-checkbox-group>` |
+| `FormGroupPlugin`     | `<b-form-group>` |
+| `FormInputPlugin`     | `<b-form-input>` |
+| `FormRadioPlugin`     | `<b-form-radio>`, `<b-form-radio-group>` |
+| `FormSelectPlugin`    | `<b-form-select>`, `<b-form-select-option>`, `<b-form-select-option-group>` |
+| `FormTagsPlugin`      | `<b-form-tags>` |
+| `FormTextareaPlugin`  | `<b-form-textarea>` |
+| `ImagePlugin`         | `<b-img>`, `<b-img-lazy>` |
+| `InputGroupPlugin`    | `<b-input-group>`, `<b-input-group-prepend>`, `<b-input-group-append>`, `<b-input-group-text>` |
+| `LayoutPlugin`        | `<b-container>`, `<b-row>`, `<b-col>` |
+| `LinkPlugin`          | `<b-link>` |
+| `ListGroupPlugin`     | `<b-list-group>`, `<b-list-group-item>` |
+| `MediaPlugin`         | `<b-media>`, `<b-media-body>` |
+| `ModalPlugin`         | `<b-modal>` |
+| `OverlayPlugin`       | `<b-overlay>` |
+| `SpinnerPlugin`       | `<b-spinner>` |
+| `TablePlugin`         | `<b-table>`, `<b-table-lite>` |
+| `TabsPlugin`          | `<b-tabs>`, `<b-tab>` |
+| `ToastPlugin`         | `<b-toast>` (hoặc dùng qua `$bvToast`) |
+| `TooltipPlugin`       | `v-b-tooltip` (directive, không có component tag) |
