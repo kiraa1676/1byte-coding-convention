@@ -113,7 +113,7 @@ Chứa tài nguyên tĩnh được truy cập trực tiếp thông qua URL mà k
 Vuex store – chứa state toàn cục cho ứng dụng.
 
 ## Quy cách phát triển Vue Component
-Các quy tắc này dựa trên phong cách viết (Style Guide) chính thức được công bố dành cho Vue.js 2: https://v2.vuejs.org/v2/style-guide/.
+Các quy tắc này dựa trên các nguyên tắc phát triển từ các team member tiền nhiệm kèm theo phong cách viết (Style Guide) chính thức được công bố dành cho Vue.js 2: https://v2.vuejs.org/v2/style-guide/.
 
 ### Quy tắc đặt tên
 Tên component được đặt theo quy tăc: PascalCase + Multi-word.
@@ -179,11 +179,11 @@ Ví dụ:
 
 ### Quy tắc về nơi đặt component
 Không có ràng buộc cụ thể về nơi đặt component, các team member của 1Byte sử dụng kinh nghiệm cá nhân của mình để phân tích và tìm chỗ đặt cho phù hợp dựa trên các tiêu chí:
-1. components/utils/
+1. `components/utils/`
 - Có thể tái sử dụng ở nhiều nơi.
-- Component có style sử dụng chung.
+- Có style sử dụng chung.
 
-2. pages/[page_component]/components/
+2. `pages/[page_component]/components/` hoặc `pages/[page_component]/components/[page_child_component]/components`
 - Chia giao diện trang hiện tại thành các thành phần nhỏ, giảm độ phức tạp, dễ quản lý.
-- Component có style phức tạp nhưng thuộc trang.
-- Component có logic phức tạp nhưng thuộc trang.
+- Có style phức tạp nhưng thuộc trang.
+- Có logic phức tạp nhưng thuộc trang.
