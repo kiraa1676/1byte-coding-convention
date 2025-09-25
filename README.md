@@ -118,7 +118,7 @@ Các quy tắc này dựa trên các nguyên tắc phát triển từ các team 
 ### Quy tắc đặt tên
 Tên component được đặt theo quy tăc: PascalCase + Multi-word.
 Ví dụ: TodoList, TodoItem, HtmlBlock,...
-Đối với route component hoặc các component đặc thù thì có thể sử dụng dạng viết tắt hoặc Single-word.
+Đối với route component hoặc các component đặc thù thì có thể sử dụng dạng Acronym hoặc Single-word.
 Ví dụ: FAQ, Promotion, Affiliate,...
 
 ### Quy tắc về cấu trúc Component
@@ -135,7 +135,7 @@ Khi muốn tách component cha thành các component con, các component con đ�
 Ví dụ:
 ```
 ├── TodoList
-|   ├── TodoList.vue
+    └── TodoList.vue
         └── components
             └── TodoItem
                 └── TodoItem.vue
@@ -237,7 +237,7 @@ Dự án được phát triển dựa trên các component dựng sẵn từ pac
 | `ToastPlugin`         | `<b-toast>` (hoặc dùng qua `$bvToast`) |
 | `TooltipPlugin`       | `v-b-tooltip` (directive, không có component tag) |
 
-Để sử dụng các component ngoài danh sách trên, import trực tiếp từ bootstrap-vue.
+Để sử dụng các component từ `bootstrap-vue` ngoài danh sách trên, hãy import và đăng ký trực tiếp.
 Ví dụ:
 ```
 <script>
