@@ -121,7 +121,7 @@ Ví dụ: TodoList, TodoItem, HtmlBlock,...
 Đối với route component hoặc các component đặc thù thì có thể sử dụng dạng Acronym hoặc Single-word.
 Ví dụ: FAQ, Promotion, Affiliate,...
 
-### Quy tắc về cấu trúc Component
+### Quy tắc về cấu trúc thư mục Component
 #### Đối với component đơn lẻ
 Component được đặt ngay bên trong một thư có tên trùng với tên component.
 Ví dụ:
@@ -156,7 +156,7 @@ import DomainTransferInput from '~/pages/DomainTransfer/components/DomainTransfe
 ```
 
 ### Quy tắc về component tag
-- Sử dụng kebab-case đối với các component từ thư viện bên ngoài, ví dụ BootstrapVue.
+- Sử dụng kebab-case đối với các component từ thư viện bên ngoài, ví dụ `bootstrap-vue`.
 Ví dụ:
 ```
 <b-form-group></b-form-group>
@@ -247,4 +247,106 @@ export default {
     components: { BNav, BNavItem },
 }
 </script>
+```
+
+### Quy tắc về cấu trúc Single-File Component
+
+#### Cấu trúc chung
+Đảm bảo thứ tự `template`, `script`, `style`.
+```
+<template></template>
+
+<script></script>
+
+<style scoped lang="scss"></style>
+```
+
+#### Các quy tắc dành cho template
+1. Sử dụng dạng camelCase cho id nếu sử dụng trực tiếp. Ví dụ: `<b-form-select id="osAddonName">`.
+2. Sử dụng dạng kebab-case cho prop. Ví dụ `<LazyUtilsFAQ :faq="FAQ" class="pb-4s my-4s">`.
+3. Sử dụng dạng camelCase cho slot name. Ví dụ: `<slot name="mainTitleHtml"></slot>`.
+4. Ưu tiên sử dụng v-if trên `template` hơn là unstyled `div` nếu thẻ chứa v-if không cần style đặc biệt.
+Thay đổi
+```
+<div v-if="condition">
+    <LazyUtilsAwardsRecognition />
+    <LazyUtilsPartners />
+</div>
+```
+Thành
+```
+<template v-if="condition">
+    <LazyUtilsAwardsRecognition />
+    <LazyUtilsPartners />
+</template>
+```
+Hoặc
+```
+<div v-if="condition" class="class-1 class-2">
+    <LazyUtilsAwardsRecognition />
+    <LazyUtilsPartners />
+</div>
+```
+5. Hạn chế sử dụng `v-html` để tạo html từ chuỗi truyền vào. Ưu tiên sử dụng i18n template với component interpolation.
+
+#### Các quy tắc dành cho script
+1. Đảm bảo các property cơ bản sau đây theo thứ tự:
+```
+export default {
+    name: 'ExampleComponent',
+    components: {},
+    mixins: [],
+    props: {},
+    async asyncData() {},
+    data() {
+        return {};
+    },
+    head() {},
+    computed: {},
+}
+```
+2. Sử dụng dạng camelCase + `Mixin` cho mixins. Ví dụ: `import errorMixin from '~/mixins/error';`
+3. Các nguyên tắc đặt tên props:
+- Sử dụng số nhiều cho Array, ví dụ `items`, `users`.
+- Sử dụng số ít cho Object, ví dụ `item`, `user`.
+- Sử dụng prefix `is`, `has`, `can`, `should` cho Boolean. Ví dụ `isVisible`, `hasItem`, `canSubmit`, `shouldRedirect`.
+- Linh hoạt sử dụng các từ chỉ số lượng như `num`, `count`, `size`,... cho Number. 
+4. Luôn chỉ định `type`, `default` hoặc `required` khi khai báo prop.
+5. Đưa các khai báo liên quan đến Vuex lên trên.
+
+Thay đổi
+```
+computed: {
+    ...mapGetters('cart', ['baseSubtotal']),
+    user() {
+        return this.$auth.user;
+    },
+    ...mapGetters('user', ['balance', 'trialConditions']),
+}
+```
+Thành
+```
+computed: {
+    ...mapGetters('cart', ['baseSubtotal']),
+    ...mapGetters('user', ['balance', 'trialConditions']),
+    user() {
+        return this.$auth.user;
+    },
+}
+```
+
+#### Các quy tắc dành cho style
+1. Chỉ sử dụng `scoped` và `scss`.
+2. File scss có tên trùng tên và nằm cùng cấp với component.
+Cấu trúc
+```
+├── TodoList
+    ├── TodoList.vue
+    └── TodoList.scss
+```
+Khai báo
+```
+<style lang="scss" scoped>
+@import 'TodoList';
+</style>
 ```
