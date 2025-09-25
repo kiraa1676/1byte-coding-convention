@@ -36,6 +36,8 @@ Việc này đảm bảo mã nguồn luôn sạch, nhất quán cũng hạn ch�
 │   ├── utils
 ├── constants
 ├── data
+|   ├── en
+|   └── km
 ├── i18n
 ├── layouts
 ├── libraries
@@ -50,7 +52,6 @@ Việc này đảm bảo mã nguồn luôn sạch, nhất quán cũng hạn ch�
 ├── services
 ├── static
 └── store
-    └── index.js
 ```
 
 ### 1. assets
@@ -64,4 +65,49 @@ Chứa các tệp tĩnh chưa được biên dịch như SCSS, hình ảnh, font
 ### 2. components
 
 Chứa các Vue components tái sử dụng trong nhiều nơi, điển hình như FAQ, IUSelect, Heading Area, các FormConfig cho các service..
-utils/: Thư mục con chứa các component được sử dụng trực tiếp trong Vue component thông qua cơ chế auto-import. Thường được sử dụng với lazy-load. Ví dụ `<LazyUtilsFAQ :faq="FAQ"></LazyUtilsFAQ>`
+**utils/**: Thư mục con chứa các component được sử dụng trực tiếp trong Vue component thông qua cơ chế auto-import. Thường được sử dụng với lazy-load. Ví dụ `<LazyUtilsFAQ :faq="FAQ"></LazyUtilsFAQ>`
+
+### 3. constants
+Chứa các hằng số, enums, cấu hình, hoặc các giá trị hardcode được sử dụng trong toàn bộ dự án.
+
+### 4. data
+Chứa các dữ liệu tĩnh liên quan đến nội dung trang như FAQ, Specifications, Top use cases,... dạng json. Các nội dung có mang tính chất đa ngôn ngữ sẽ được phân loại vào các thư mục ngôn ngữ tương ứng: `en` hoặc `km`.
+
+### 5. i18n
+Chứa cấu hình và các file dịch đa ngôn ngữ, dựa trên package `@nuxtjs/i18n`.
+
+### 6. layouts
+Chứa các layout của trang.
+
+### 7. libraries
+Chứa các thư viện tùy chỉnh.
+
+### 8. middleware
+Chứa các middleware chạy trước khi render trang (SSR + CSR).
+
+### 9. mixins
+Chứa các mixin Vue dùng chung giữa nhiều component.
+
+### 10. modules
+Chứa các module tuỳ chỉnh mở rộng từ Nuxt.
+
+### 11. pages
+Chứa các trang có trong ứng dụng, đăng ký ở `router`.
+
+### 12. plugins
+Chứa các plugin được sử dụng trong ứng dụng, ví dụ: helpers, logger, api, seo,...
+
+### 13. router
+Đăng ký router tùy chỉnh thay dựa trên package `@nuxtjs/router`. Liên kết với các trang ở thư mục `pages`.
+
+### 14. server-middleware
+Chứa các middleware phía server: ví dụ redirect về mobile-app từ web-app và ngược lại hoặc redirect về đúng website của quốc gia dựa trên `cf-ipcountry`.
+
+### 15. services
+Chứa logic gọi API (wrapper từ axios plugin).
+
+### 16. static
+Chứa tài nguyên tĩnh được truy cập trực tiếp thông qua URL mà không sử dụng bằng cách import, ví dụ: `/robots.txt`, `/favicon.ico`.
+
+### 17. store
+Vuex store – chứa state toàn cục cho ứng dụng.
