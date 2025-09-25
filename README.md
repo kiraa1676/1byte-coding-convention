@@ -64,7 +64,7 @@ Chứa các tệp tĩnh chưa được biên dịch như SCSS, hình ảnh, font
 
 ### 2. components
 
-Chứa các Vue components tái sử dụng trong nhiều nơi, điển hình như FAQ, IUSelect, Heading Area, các FormConfig cho các service..
+Chứa các Vue components tái sử dụng trong nhiều nơi, điển hình như `FAQ`, `IUSelect`, `HeadingArea`, các `FormConfig` cho các service..
 **utils/**: Thư mục con chứa các component được sử dụng trực tiếp trong Vue component thông qua cơ chế auto-import. Thường được sử dụng với lazy-load. Ví dụ `<LazyUtilsFAQ :faq="FAQ"></LazyUtilsFAQ>`
 
 ### 3. constants
@@ -101,7 +101,7 @@ Chứa các plugin được sử dụng trong ứng dụng, ví dụ: helpers, l
 Đăng ký router tùy chỉnh thay dựa trên package `@nuxtjs/router`. Liên kết với các trang ở thư mục `pages`.
 
 ### 14. server-middleware
-Chứa các middleware phía server: ví dụ redirect về mobile-app từ web-app và ngược lại hoặc redirect về đúng website của quốc gia dựa trên `cf-ipcountry`.
+Chứa các middleware phía server: ví dụ redirect về `mobile-app` từ `web-app` và ngược lại hoặc redirect về đúng website của quốc gia dựa trên `cf-ipcountry`.
 
 ### 15. services
 Chứa logic gọi API (wrapper từ axios plugin).
@@ -117,9 +117,9 @@ Các quy tắc này dựa trên các nguyên tắc phát triển từ các team 
 
 ### Quy tắc đặt tên
 Tên component được đặt theo quy tăc: PascalCase + Multi-word.
-Ví dụ: TodoList, TodoItem, HtmlBlock,...
+Ví dụ: `TodoList`, `TodoItem`, `HtmlBlock`,...
 Đối với route component hoặc các component đặc thù thì có thể sử dụng dạng Acronym hoặc Single-word.
-Ví dụ: FAQ, Promotion, Affiliate,...
+Ví dụ: `FAQ`, `Promotion`, `Affiliate`,...
 
 ### Quy tắc về cấu trúc thư mục Component
 #### Đối với component đơn lẻ
@@ -174,6 +174,7 @@ Ví dụ:
 ```
 <TopUpAmount></TopUpAmount>
 <DomainTransferForm></DomainTransferForm>
+<FAQ></FAQ>
 ```
 
 ### Quy tắc về nơi đặt component
