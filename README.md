@@ -111,3 +111,79 @@ Chứa tài nguyên tĩnh được truy cập trực tiếp thông qua URL mà k
 
 ### 17. store
 Vuex store – chứa state toàn cục cho ứng dụng.
+
+## Quy cách phát triển Vue Component
+Các quy tắc này dựa trên phong cách viết (Style Guide) chính thức được công bố dành cho Vue.js 2: https://v2.vuejs.org/v2/style-guide/.
+
+### Quy tắc đặt tên
+Tên component được đặt theo quy tăc: PascalCase + Multi-word.
+Ví dụ: TodoList, TodoItem, HtmlBlock,...
+Đối với route component hoặc các component đặc thù thì có thể sử dụng dạng viết tắt hoặc Single-word.
+Ví dụ: FAQ, Promotion, Affiliate,...
+
+### Quy tắc về cấu trúc Component
+#### Đối với component đơn lẻ
+Component được đặt ngay bên trong một thư có tên trùng với tên component.
+Ví dụ:
+```
+├── TodoList
+    └── TodoList.vue
+```
+
+#### Đối với component phức tạp
+Khi muốn tách component cha thành các component con, các component con được đặt vào thư mục `components/` cùng cấp với component cha.
+Ví dụ:
+```
+├── TodoList
+|   ├── TodoList.vue
+        └── components
+            └── TodoItem
+                └── TodoItem.vue
+```
+
+### Quy tắc sử dụng Component
+#### Quy tắc import
+- Luôn bắt đầu đường dẫn với ký tự `~`.
+Ví dụ:
+```
+import TldFaq from '~/pages/DomainTldDetail/components/TldFaq/TldFaq';
+```
+- Luôn sử dụng đường dẫn đầy đủ khi import, không sử dụng đường dẫn tương đối
+Ví dụ:
+```
+import CloudHostingForm from '~/components/services-form-config/CloudHostingForm/CloudHostingForm';
+import DomainTransferInput from '~/pages/DomainTransfer/components/DomainTransferForm/components/DomainTransferInput/DomainTransferInput';
+```
+
+### Quy tắc về component tag
+- Sử dụng kebab-case đối với các component từ thư viện bên ngoài, ví dụ BootstrapVue.
+Ví dụ:
+```
+<b-form-group></b-form-group>
+<b-card></b-card>
+<b-container>
+  <b-row>
+    <b-col>1 of 3</b-col>
+    <b-col>2 of 3</b-col>
+    <b-col>3 of 3</b-col>
+  </b-row>
+</b-container>
+``` 
+- Sử dụng PascalCase hoặc dạng Acronym đối với các component tự phát triển.
+Ví dụ:
+```
+<TopUpAmount></TopUpAmount>
+<DomainTransferForm></DomainTransferForm>
+```
+**Lưu ý**: luôn sử dụng thẻ đóng cho component, không sử dụng self-closing component.
+
+### Quy tắc về nơi đặt component
+Không có ràng buộc cụ thể về nơi đặt component, các team member của 1Byte sử dụng kinh nghiệm cá nhân của mình để phân tích và tìm chỗ đặt cho phù hợp dựa trên các tiêu chí:
+1. components/utils/
+- Có thể tái sử dụng ở nhiều nơi.
+- Component có style sử dụng chung.
+
+2. pages/[page_component]/components/
+- Chia giao diện trang hiện tại thành các thành phần nhỏ, giảm độ phức tạp, dễ quản lý.
+- Component có style phức tạp nhưng thuộc trang.
+- Component có logic phức tạp nhưng thuộc trang.
