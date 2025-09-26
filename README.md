@@ -1,5 +1,5 @@
-# 1Byte Store Coding Convention
-Đây là hướng dẫn chính thức về các quy cách khi phát triển dự án 1Byte Store (web-app & mobile-app)
+# 1Byte Store Style Guide
+Đây là hướng dẫn chính thức về các quy tắc khi phát triển dự án 1Byte Store (web-app & mobile-app)
 
 ## Cấu hình Webstorm
 ### Cấu hình Prettier
