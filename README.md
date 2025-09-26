@@ -59,7 +59,7 @@ Việc này đảm bảo mã nguồn luôn sạch, nhất quán cũng hạn ch�
 Chứa các tệp tĩnh chưa được biên dịch như SCSS, hình ảnh, fonts...
 
 - fonts/: Font chữ tùy chỉnh.
-- images/: Ảnh dùng trong giao diện (logo, icon, ảnh đại diện,...). Được sử dụng bằng cách import vào Vue component.
+- images/: Ảnh dùng trong giao diện (logo, icon, ảnh đại diện, ảnh dùng các page hoặc module cụ thể,...). Được sử dụng bằng cách import vào Vue component.
 - scss/: Các tệp SCSS/SASS (biến màu sắc, mixins, style chung...).
 
 ### 2. components
@@ -144,6 +144,7 @@ Ví dụ:
 ### Quy tắc sử dụng Component
 #### Quy tắc import
 - Luôn bắt đầu đường dẫn với ký tự `~`.
+- Kết thúc đường dẫn không chứa phần mở rộng `.vue`.
 Ví dụ:
 ```
 import TldFaq from '~/pages/DomainTldDetail/components/TldFaq/TldFaq';
@@ -262,7 +263,7 @@ export default {
 <style lang="scss" scoped></style>
 ```
 
-#### Các quy tắc dành cho template
+#### Các quy tắc dành cho thẻ template
 1. Sử dụng dạng camelCase cho id nếu sử dụng trực tiếp. Ví dụ: `<b-form-select id="osAddonName">`.
 2. Sử dụng dạng kebab-case cho prop. Ví dụ `<LazyUtilsFAQ :faq="FAQ" class="pb-4s my-4s">`.
 3. Sử dụng dạng camelCase cho slot name. Ví dụ: `<slot name="mainTitleHtml"></slot>`.
@@ -290,7 +291,7 @@ Hoặc
 ```
 5. Hạn chế sử dụng `v-html` để tạo html từ chuỗi truyền vào. Ưu tiên sử dụng i18n template với component interpolation.
 
-#### Các quy tắc dành cho script
+#### Các quy tắc dành cho thẻ script
 1. Đảm bảo các property cơ bản sau đây cấu trúc theo thứ tự:
 ```
 export default {
@@ -306,8 +307,9 @@ export default {
     computed: {},
 }
 ```
-2. Sử dụng dạng camelCase + `Mixin` cho mixins. Ví dụ: `import errorMixin from '~/mixins/error';`
-3. Các nguyên tắc đặt tên props:
+2. Đường dẫn các tập tin js khi import không chứa phần mở rộng `.js`.
+3. Sử dụng dạng camelCase + `Mixin` cho mixins. Ví dụ: `import errorMixin from '~/mixins/error';`
+4. Các nguyên tắc đặt tên props:
 - Sử dụng số nhiều cho Array, ví dụ `items`, `users`.
 - Sử dụng số ít cho Object, ví dụ `item`, `user`.
 - Sử dụng prefix `is`, `has`, `can`, `should` cho Boolean. Ví dụ `isVisible`, `hasItem`, `canSubmit`, `shouldRedirect`.
@@ -336,7 +338,7 @@ computed: {
 }
 ```
 
-#### Các quy tắc dành cho style
+#### Các quy tắc dành cho thẻ style
 1. Chỉ sử dụng `scoped` và `scss`.
 2. File scss có tên trùng tên và nằm cùng cấp với component.
 Cấu trúc
@@ -351,3 +353,36 @@ Khai báo
 @import 'TodoList';
 </style>
 ```
+
+### Quy tắc về Styling cho Component
+Store sử dụng package `bootstrap-vue` làm nền tảng cho giao diện, với các tuỳ biến riêng về màu sắc và khoảng cách. Các component được tùy chỉnh theo hướng ưu tiên sử dụng các utility class có sẵn của Bootstrap, kết hợp với các utility class đã được xây dựng sẵn trước đó.
+
+#### Cấu trúc thư mục
+```
+├── assets
+    └── scss
+        ├── _mixins.scss
+        ├── _var.scss
+        ├── general.scss
+        ├── helpers.scss
+        └── theme.scss
+```
+1. **_mixins.scss**: chứa mixin và function toàn cục về breakpoint, flex, line-clamps,...
+2. **_var.scss**: chứa các biến toàn cục về font chữ, font size, grid breakpoints, khoảng cách, màu sắc,...
+3. **general.scss**: file sytle chính cho toàn bộ trang. Chứa bootstrap, cấu hình font chữ, các class hoặc các style ghi đè toàn cục.
+4. **helpers.scss**: file style chính cho toàn bộ trang. Chứa các utility-class mở rộng, cấu hình các màu sắc có thể sử dụng trực tiếp từ utility-class. Ví dụ: `text-blue-dianne`, `bg-alabaster-2`, `max-w-600-px`,...
+5. **theme.scss**: chứa cấu hình theme styling. Chỉ dùng trong trường hợp phát triển giao diện trang chủ mang tính chất theo mùa.
+
+#### Các quy tắc khi Styling
+1. Luôn ưu tiên sử dụng các class có sẵn từ Bootstrap + **helpers.scss**.
+2. Tuỳ theo mức độ phổ biến của màu sắc trên giao diện mà: ưu tiên sử dụng màu sắc đã được khai báo trong **helpers.scss** để sử dụng utility-class > Sử dụng màu sắc được khai báo trong **_var.scss** vào custom style > Khai báo màu sắc trực tiếp vào custom style. Hạn chế thấp nhất có thể việc thêm màu sắc vào **helpers.scss**.
+3. Bám sát grid breakpoints và các container width được khai báo trong **_var.scss**. Ưu tiên sử dụng mixins media-breakpoint. Kèm theo đó:
+- `web-app`: min width là 1400px. Ngoài việc triển khai giao diện theo Figma cũng cần đảm bảo giao diện ở Macbook 14" (1612px) được hài hoà.
+- `mobile-app`: min width là 320px.
+4. Ưu tiên Bootstrap grid > flexbox hoặc grid.
+5. Khi triển khai custom styling:
+- Sử dụng `dvh` thay cho `vh` để đảm bảo chiều cao luôn động theo khung nhìn thiết bị.
+- Ưu tiên triển khai dưới dạng quy tắc BEM.
+- Ưu tiên các giá trị được khai báo sẵn trong **_var.scss**.
+- Ưu tiên truyền prop cho phép custom class > sử dụng `::v-deep`.
+- Vẫn là ưu tiên bám sát grid breakpoint đã được khai báo sẵn trong **_var.scss**.
