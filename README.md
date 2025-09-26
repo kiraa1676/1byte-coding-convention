@@ -291,7 +291,7 @@ Hoặc
 5. Hạn chế sử dụng `v-html` để tạo html từ chuỗi truyền vào. Ưu tiên sử dụng i18n template với component interpolation.
 
 #### Các quy tắc dành cho script
-1. Đảm bảo các property cơ bản sau đây theo thứ tự:
+1. Đảm bảo các property cơ bản sau đây cấu trúc theo thứ tự:
 ```
 export default {
     name: 'ExampleComponent',
