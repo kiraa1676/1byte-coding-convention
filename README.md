@@ -386,3 +386,196 @@ Store sử dụng package `bootstrap-vue` làm nền tảng cho giao diện, v�
 - Ưu tiên các giá trị được khai báo sẵn trong **_var.scss**.
 - Ưu tiên truyền prop cho phép custom class > sử dụng `::v-deep`.
 - Vẫn là ưu tiên bám sát grid breakpoint đã được khai báo sẵn trong **_var.scss**.
+
+### Code Samples
+Cung cấp những đoạn mã nguồn mẫu đã và đang được sử dụng trong mã nguồn để giải quyết các vấn đề chung.
+
+#### 1. Đăng ký trang mới
+```
+const Promotion = () => import('~/pages/Promotion/Promotion').then((m) => m.default || m);
+const routes = [
+{
+    path: '/promotion',
+    name: 'promotion',
+    component: Promotion,
+    meta: {
+        metaTags: META.PROMOTION,
+        sitemap: false, // Hoặc bỏ qua
+    },
+},
+];
+```
+
+#### 2. Xử lý `asyncData` và template
+Luôn bọc các xử lý API bên trong `asyncData` với `$helpers.catchAndReturnArray` cho Array,  `$helpers.catchAndReturnObject` cho Object hoặc `$helpers.catchAndReturnValue` với giá trị tuỳ ý nhằm đảm bảo luôn có giá trị mặc định được trả về.
+```
+async asyncData({ app, store, route }) {
+    const [FAQ, { reviews, schemas }, blogs] = await Promise.all([
+        app.$helpers.catchAndReturnValue(
+            () => app.$api.schemas.getBusinessFeedbacks(),
+            {
+                reviews: [],
+                schemas: [],
+            }
+        ),
+        app.$helpers.catchAndReturnArray(() =>
+            app.$api.blog.getBlogsByKey(app.getRouteBaseName(route))
+        ),
+    ]);
+    return {
+        schemas,
+        reviews,
+        blogs,
+    };
+}
+```
+
+#### 3. Xử lý API
+Luôn xử lý lỗi thông qua `handleThrowError` từ `errorMixin`.
+```
+import errorMixin from '~/mixins/error';
+
+export default {
+    mixins: [errorMixin],
+    data() {
+        return {
+            loading: false,
+            items: [],
+        };
+    },
+    methods: {
+        async getManualInvoices() {
+            try {
+                this.loading = loading;
+                this.items = await this.$api.user.getManualInvoices();
+            } catch (error) {
+                this.handleThrowError(error);
+            } finally {
+                this.loading = false;
+            }
+        },
+    }
+}
+```
+
+#### 4. Xử lý loading
+Ngoài việc xử lý loading trong nội tại component thông qua `b-overlay`, `b-spinner` hay `b-skeleton`, dự án còn xây dựng sẵn các loại loading sau đây:
+
+1. Global loading
+```
+// Bật
+this.$store.commit('loading/setLoading', true);
+// Tắt
+this.$store.commit('loading/setLoading', false);
+```
+
+2. Cart loading (dành riêng cho trang checkout)
+```
+// Bật
+this.$store.commit('cart/SET_LOADING', true);
+// Tắt
+this.$store.commit('cart/SET_LOADING', false);
+```
+
+#### 5. Toast notifications
+```
+this.$store.commit('message/setMessage', {
+    type: 'success', // type dựa trên variants của Bootstrap
+    message: this.$t('message.SUBSCRIPTION_SUCCESSFULLY'),
+});
+```
+
+#### 6. i18n component interpolation
+Local message
+```
+{
+    message: Use a different email address or {login} to the existing account,
+}
+```
+Thay thế `{login}` bằng giá nút nhấn mở login modal
+```
+<i18n path="message" tag="div">
+    <template #login>
+        <b-button @click="openLoginPopup">
+            {{ $t('button.login') }}
+        </b-button>
+    </template>
+</i18n>
+```
+
+#### 7. Sử dụng `localePath` để tạo URL dựa trên locale hiện tại
+Ví dụ, URL: `/term-and-conditions`.
+```
+this.localePath({ name: 'term-and-conditions' })
+// locale en: /term-and-conditions
+// locale km: /km/term-and-conditions
+```
+
+#### 8. Sử dụng `computed` để triển khai `v-model` thay vì `@input`
+```
+export default {
+    props: {
+      value: {
+        type: String,
+        default: ''
+      }
+    },
+    computed: {
+      model: {
+        get() {
+          return this.value
+        },
+        set(value) {
+          this.$emit('input', value)
+        }
+      }
+    }
+}
+```
+
+#### 9. Sử dụng quy tắc BEM khi triển khai giao diện phức tạp
+Template
+```
+<ul class="four-easy-step-list">
+    <li
+        v-for="(item, idx) in steps"
+        :key="idx"
+        class="four-easy-step-list__item"
+    >
+        <div class="flex-grow-1 px-2s pt-2s pb-3">
+            <div class="four-easy-step-list__item-title">
+                {{ $t(item.title) }}
+            </div>
+            <div class="four-easy-step-list__item-content">
+                {{ $t(item.content) }}
+            </div>
+        </div>
+    </li>
+</ul>
+```
+CSS
+```
+.four-easy-step {
+     &-list {
+        counter-reset: number;
+        &__item {
+            $number-width: 64px;
+            $number-height: 80px;
+            &:before {
+                counter-increment: number;
+                content: counter(number);
+                width: $number-width;
+                height: $number-height;
+                color: $color-malibu;
+                font-weight: map-get($font-weights, 'medium');
+            }
+            &-title {
+                // Custom CSS
+            }
+            &-content {
+                // Custom CSS
+            }
+        }
+    }
+}
+```
