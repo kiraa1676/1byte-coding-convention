@@ -100,16 +100,19 @@ Chứa các plugin được sử dụng trong ứng dụng, ví dụ: helpers, l
 ### 13. router
 Đăng ký router tùy chỉnh thay dựa trên package `@nuxtjs/router`. Liên kết với các trang ở thư mục `pages`.
 
-### 14. server-middleware
+### 14. schemes
+Nơi định nghĩa các custom scheme cho `@nuxtjs/auth-next`. Chủ yếu liên quan đến các logic cho auth.
+
+### 15. server-middleware
 Chứa các middleware phía server: ví dụ redirect về `mobile-app` từ `web-app` và ngược lại hoặc redirect về đúng website của quốc gia dựa trên `cf-ipcountry`.
 
-### 15. services
+### 16. services
 Chứa logic gọi API (wrapper từ axios plugin).
 
-### 16. static
+### 17. static
 Chứa tài nguyên tĩnh được truy cập trực tiếp thông qua URL mà không sử dụng bằng cách import, ví dụ: `/robots.txt`, `/favicon.ico`.
 
-### 17. store
+### 18. store
 Vuex store – chứa state toàn cục cho ứng dụng.
 
 ## Quy cách phát triển Vue Component
